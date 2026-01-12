@@ -1,128 +1,132 @@
-Job Application Helper – AI-Powered RAG System
-Overview
+# Job Application Helper – AI-Powered RAG System
+
+## Overview
 
 Job Application Helper is an AI-powered system designed to assist users throughout the job application process by enabling intelligent interaction with personal career documents such as resumes and job descriptions.
 
 The system follows a Retrieval-Augmented Generation (RAG) architecture, ensuring that responses are grounded in user-provided documents rather than generic language model output. This significantly improves accuracy, relevance, and trustworthiness of responses.
 
-Key Features
+---
 
-Document upload and automated text extraction
+## Key Features
 
-Intelligent chunking and semantic embedding
+- Document upload and automated text extraction
+- Intelligent chunking and semantic embedding
+- Vector-based similarity search for relevant context
+- Context-aware conversational interface
+- Incremental indexing without rebuilding the full vector store
+- Modular and extensible backend architecture
 
-Vector-based similarity search for relevant context
+---
 
-Context-aware conversational interface
+## Tech Stack
 
-Incremental indexing without rebuilding the full vector store
+### Backend
+- Python
+- FastAPI
+- Uvicorn
 
-Modular and extensible backend architecture
+### Frontend
+- Lightweight web interface for uploads and chat
 
-Tech Stack
+### AI and Retrieval
+- Embedding-based vector search
+- Retrieval-Augmented Generation (RAG) pipeline
 
-Backend
+---
 
-Python
+## System Workflow
 
-FastAPI
+1. User uploads documents such as resumes or job descriptions
+2. Documents are parsed, cleaned, and split into chunks
+3. Chunks are converted into vector embeddings and stored locally
+4. User queries trigger similarity search over stored embeddings
+5. Retrieved context is passed to the language model to generate grounded responses
 
-Uvicorn
+---
 
-Frontend
+## API Endpoints
 
-Lightweight web interface for uploads and chat
+POST /upload  
+Upload and process documents
 
-AI & Retrieval
+POST /embed  
+Generate embeddings for new documents
 
-Embedding-based vector search
+GET /retrieve  
+Retrieve top-K relevant document chunks
 
-Retrieval-Augmented Generation (RAG) pipeline
+POST /chat  
+Chat with document-grounded responses
 
-System Workflow
+---
 
-User uploads documents such as resumes or job descriptions
+## Project Structure
 
-Documents are parsed, cleaned, and split into chunks
+Backend/  
+├── app/  
+│   ├── main.py  
+│   ├── routers/  
+│   ├── services/  
+│   ├── storage/  
+│   └── utils/  
+├── requirements.txt  
+└── README.md  
 
-Chunks are converted into vector embeddings and stored locally
+Frontend/  
+├── src/  
+├── components/  
+└── package.json  
 
-User queries trigger similarity search over stored embeddings
+---
 
-Retrieved context is passed to the language model to generate grounded responses
+## Running the Project Locally
 
-API Endpoints
-POST   /upload     Upload and process documents
-POST   /embed      Generate embeddings for new documents
-GET    /retrieve   Retrieve top-K relevant document chunks
-POST   /chat       Chat with document-grounded responses
+### Backend
 
-Project Structure
-Backend/
-├── app/
-│   ├── main.py
-│   ├── routers/
-│   ├── services/
-│   ├── storage/
-│   └── utils/
-├── requirements.txt
-└── README.md
+cd Backend  
+python -m venv .venv  
+source .venv/bin/activate  
+pip install -r requirements.txt  
+uvicorn app.main:app --reload  
 
-Frontend/
-├── src/
-├── components/
-└── package.json
+### Frontend
 
-Running the Project Locally
+cd Frontend  
+npm install  
+npm run dev  
 
-Backend
+---
 
-cd Backend
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+## Use Cases
 
+- Resume and job description analysis
+- Interview and application preparation
+- Personalized job-search assistance
+- Career document intelligence
 
-Frontend
+---
 
-cd Frontend
-npm install
-npm run dev
+## Design Principles
 
-Use Cases
+- Responses must be grounded in retrieved documents
+- Clear separation between ingestion, retrieval, and generation
+- Optimized for local development and future cloud deployment
+- Clean, maintainable, and scalable codebase
 
-Resume and job description analysis
+---
 
-Interview and application preparation
+## Future Enhancements
 
-Personalized job-search assistance
+- Authentication and multi-user support
+- Cloud-based vector databases
+- Resume scoring and skill gap analysis
+- Automated cover letter generation
+- Production deployment on cloud platforms
 
-Career document intelligence
+---
 
-Design Principles
+## Author
 
-Responses must be grounded in retrieved documents
-
-Clear separation between ingestion, retrieval, and generation
-
-Optimized for local development and future cloud deployment
-
-Clean, maintainable, and scalable codebase
-
-Future Enhancements
-
-Authentication and multi-user support
-
-Cloud-based vector databases
-
-Resume scoring and skill gap analysis
-
-Automated cover letter generation
-
-Production deployment on cloud platforms
-
-Author
-
-Nitin Singh Rathore
+Nitin Singh Rathore  
 Master’s Student – Computer Science
