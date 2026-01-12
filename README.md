@@ -126,7 +126,4 @@ npm run dev
 
 ---
 
-## Author
 
-Nitin Singh Rathore  
-Master’s Student – Computer Science
