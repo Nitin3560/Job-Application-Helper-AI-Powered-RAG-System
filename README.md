@@ -153,23 +153,30 @@ This project is designed to run **locally** to better understand system behavior
 
 
 ### 1. Clone the Repository 
+```bash
 git clone https://github.com/<your-username>/Job-Application-Helper-AI-Powered-RAG-System.git  
 cd Job-Application-Helper-AI-Powered-RAG-System 
+```
 
-### 2. Backend Setup 
+### 2. Backend Setup  
+```bash
 cd Backend  
 python -m venv  
 .venv source .venv/bin/activate (for Windows .venv\Scripts\activate)  
 pip install -r requirements.txt
+```
 ### 3. Start the Backend Server 
-
-uvicorn app.main:app --reload  
+```bash
+uvicorn app.main:app --reload
+```
 By default, the backend runs at: http://127.0.0.1:8000
 ### 4. Frontend Setup 
 In a new terminal: 
+```bash
 cd Frontend  
 npm install  
-npm run dev  
+npm run dev
+```
 The frontend runs at: http://localhost:5173 
 
 ### 5. Using the Application
