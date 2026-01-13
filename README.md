@@ -73,7 +73,6 @@ Retrieval was occasionally executed before embeddings were generated, resulting 
 Enforced a strict system state workflow with explicit precondition checks:
 Upload → Chunk → Embed → Retrieve
 
----
 
 ### 2. Silent Retrieval Failures and Hallucinated Outputs
 When retrieval returned low-signal or empty results, the LLM still produced confident but incorrect responses.
@@ -81,7 +80,6 @@ When retrieval returned low-signal or empty results, the LLM still produced conf
 **Resolution:**  
 Added index readiness checks and converted silent failures into explicit, surfaced errors rather than allowing generation to proceed.
 
----
 
 ### 3. Chunk Identity Mismatches Across Storage Layers
 Retrieved chunks did not always map back correctly to the source text due to inconsistent chunk IDs between storage and the vector index.
@@ -89,7 +87,6 @@ Retrieved chunks did not always map back correctly to the source text due to inc
 **Resolution:**  
 Standardized chunk ID generation and metadata schema across ingestion, storage, and retrieval layers.
 
----
 
 ### 4. Duplicate Embeddings and Wasted Compute
 Re-uploading documents resulted in redundant embeddings without visibility into previously processed chunks.
@@ -97,7 +94,6 @@ Re-uploading documents resulted in redundant embeddings without visibility into 
 **Resolution:**  
 Implemented persistent chunk tracking using an `embedded_ids.json` file to prevent re-embedding already indexed content.
 
----
 
 ### 5. Backend Failures Masked by Frontend Behavior
 The frontend appeared functional even when backend services were failing silently, leading to confusing user experiences.
@@ -105,7 +101,6 @@ The frontend appeared functional even when backend services were failing silentl
 **Resolution:**  
 Locked backend response contracts and propagated backend errors explicitly to the frontend for visibility.
 
----
 
 ### 6. Poor Observability During Failures
 Minimal logging made it difficult to determine which stage of the pipeline failed during errors.
@@ -113,7 +108,6 @@ Minimal logging made it difficult to determine which stage of the pipeline faile
 **Resolution:**  
 Introduced stage-level logging for ingestion, embedding, and retrieval to isolate failures quickly.
 
----
 
 ### 7. Environment-Dependent Behavior and Brittle Setup
 The application behaved inconsistently across machines due to hard-coded paths and environment drift.
