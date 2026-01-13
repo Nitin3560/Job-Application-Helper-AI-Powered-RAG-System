@@ -156,51 +156,49 @@ This project is designed to run **locally** to better understand system behavior
 
 ---
 
-### 1. Clone the Repository
-
+# 1. Clone the repository
 git clone https://github.com/<your-username>/Job-Application-Helper-AI-Powered-RAG-System.git
 cd Job-Application-Helper-AI-Powered-RAG-System
 
-###2. Backend Setup
-cd Backend
-python -m venv .venv
-source .venv/bin/activate   # macOS/Linux
-# .venv\Scripts\activate    # Windows
 
+# Backend Setup
+# ----------------
+cd Backend
+
+# Create and activate virtual environment
+python -m venv .venv
+
+# macOS / Linux
+source .venv/bin/activate
+
+# Windows (PowerShell)
+# .venv\Scripts\activate
+
+# Install backend dependencies
 pip install -r requirements.txt
 
-###3. Start the Backend Server
+# Start backend server
 uvicorn app.main:app --reload
 
+# Backend runs at:
+# http://127.0.0.1:8000
 
-By default, the backend runs at:
 
-http://127.0.0.1:8000
-
-###4. Frontend Setup
-
-In a new terminal:
+# Frontend Setup
+# ----------------
+# Open a new terminal window/tab before running these commands
 
 cd Frontend
+
+# Install frontend dependencies
 npm install
+
+# Start frontend dev server
 npm run dev
 
+# Frontend runs at:
+# http://localhost:5173
 
-The frontend runs at:
-
-http://localhost:5173
-
-###5. Using the Application
-
-Open the frontend in your browser
-
-Upload a resume or project document
-
-Trigger embedding (only new documents are embedded)
-
-Ask questions via the chat interface
-
-Responses are generated using the retrieved document context
 ---
 
 ## Disclaimer
