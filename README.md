@@ -2,10 +2,7 @@
 
 ## Demo
 
-<video width="100%" controls>
-  <source src="Demo/job application helper.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+▶️ **Demo Video:** https://youtu.be/LgAuwA7_3VM
 
 
 ## Overview
