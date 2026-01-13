@@ -159,7 +159,7 @@ cd Job-Application-Helper-AI-Powered-RAG-System
 ### 2. Backend Setup 
 cd Backend  
 python -m venv  
-.venv source .venv/bin/activate (for Windows .venv\Scripts\activate)
+.venv source .venv/bin/activate (for Windows .venv\Scripts\activate)  
 pip install -r requirements.txt
 ### 3. Start the Backend Server 
 
