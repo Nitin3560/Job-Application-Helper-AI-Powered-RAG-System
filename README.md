@@ -144,61 +144,42 @@ Standardized environment setup, removed absolute paths, and documented strict st
 
 ---
 
-## Setup & Running the Project
-
-This project is designed to run **locally** to better understand system behavior, failure modes, and design trade-offs.
-
-### Prerequisites
-
+## Setup & Running the Project 
+This project is designed to run **locally** to better understand system behavior, failure modes, and design trade-offs. 
+### Prerequisites 
 - Python 3.10+
 - pip
 - Git
 
----
 
-###Clone the repository
-git clone https://github.com/<your-username>/Job-Application-Helper-AI-Powered-RAG-System.git
-cd Job-Application-Helper-AI-Powered-RAG-System
+### 1. Clone the Repository 
+git clone https://github.com/<your-username>/Job-Application-Helper-AI-Powered-RAG-System.git  
+cd Job-Application-Helper-AI-Powered-RAG-System 
 
-
-###Backend Setup
-
-cd Backend
-
- ***Create and activate virtual environment ***
-python -m venv .venv
-
- ***macOS / Linux ***
-source .venv/bin/activate
-
- ***Windows (PowerShell) ***
-.venv\Scripts\activate
-
- ***Install backend dependencies ***
+### 2. Backend Setup 
+cd Backend  
+python -m venv  
+.venv source .venv/bin/activate (for Windows .venv\Scripts\activate)
 pip install -r requirements.txt
+### 3. Start the Backend Server 
 
- ***Start backend server ***
-uvicorn app.main:app --reload
+uvicorn app.main:app --reload  
+By default, the backend runs at: http://127.0.0.1:8000
+### 4. Frontend Setup 
+In a new terminal: 
+cd Frontend  
+npm install  
+npm run dev  
+The frontend runs at: http://localhost:5173 
 
- ***Backend runs at: ***
-http://127.0.0.1:8000
+### 5. Using the Application
 
+- Open the frontend in your browser  
+- Upload a resume or project document  
+- Trigger embedding (only new documents are embedded)  
+- Ask questions via the chat interface 
 
-### Frontend Setup
-
- ***Open a new terminal window/tab before running these commands ***
-
-cd Frontend
-
- ***Install frontend dependencies ***
-npm install
-
- ***Start frontend dev server ***
-npm run dev
-
- ***Frontend runs at: ***
-http://localhost:5173
-
+#### Responses are generated using the retrieved document context
 ---
 
 ## Disclaimer
