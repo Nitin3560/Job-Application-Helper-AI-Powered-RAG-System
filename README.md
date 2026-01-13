@@ -1,5 +1,13 @@
 # Job Application Helper – AI-Powered RAG System
 
+## Demo
+
+<video width="100%" controls>
+  <source src="Demo/job application helper.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+
 ## Overview
 
 Job Application Helper is an AI-powered system designed to assist users during the job application process by generating context-aware, grounded responses to common application questions (e.g., “Why this role?”, project explanations, experience summaries).
