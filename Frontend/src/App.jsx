@@ -28,18 +28,20 @@ function App(){
       }
       const data=await res.json();
       setTimeout(()=>setStatus(""),2000);
-
+    
       const clean = (data.reply || "")
-      .replace(/according to the sources.*?,/i,"")
-      .replace(/\[[^\]]+\]/g,"")
-      .trim();
-
-    setMessages(p=>[...p,{role:"assistant",content:clean}]);
-
+        .replace(/according to the sources.*?,/i,"")
+        .replace(/\[[^\]]+\]/g,"")
+        .trim();
+    
+      setMessages(p=>[...p,{role:"assistant",content:clean}]);
+    
     }catch (e) {
       const msg = e?.message || "Request failed";
       setMessages((prev) => [...prev, { role: "assistant", content: `Error: ${msg}` }]);
-    }    
+    } finally {
+      setSending(false);
+    }      
   };
   const endRef=useRef(null);
   useEffect(()=>{endRef.current?.scrollIntoView({behavior:"smooth"});},[messages]);
@@ -66,6 +68,12 @@ function App(){
       setTimeout(()=>setStatus(""),2000);
     }
   };
+  const TypingDots = () => (
+    <span className="typing-dots" aria-label="Generating">
+      <span>.</span><span>.</span><span>.</span>
+    </span>
+  );
+  
 
   return(
     <div className="page">
@@ -74,17 +82,27 @@ function App(){
           <div className="chat-header">Job Application Helper</div>
 
           <div className="chat-messages">
-          {messages.map((m,i)=>(
-            <div
-              key={i}
-              className="msg"
-              style={{marginLeft:m.role==="user"?"auto":"0"}}
-            >
-              {m.content}
-            </div>
-          ))}
-          <div ref={endRef}/>
-        </div>
+  {messages.map((m, i) => (
+    <div
+      key={i}
+      className={`msg ${m.role === "user" ? "user" : "assistant"}`}
+    >
+      {m.content}
+    </div>
+  ))}
+
+  {/* ✅ dots appear as NEXT assistant message */}
+  {sending && (
+    <div className="msg assistant">
+      <span className="typing-dots" aria-label="Generating">
+        <span>.</span><span>.</span><span>.</span>
+      </span>
+    </div>
+  )}
+
+  <div ref={endRef} />
+</div>
+
 
 
           <div className="chat-input">
