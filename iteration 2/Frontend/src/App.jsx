@@ -2,24 +2,68 @@ import{useState}from"react";
 import"./App.css";
 import{useEffect,useRef}from"react";
 
+const API_BASE="http://136.113.194.22:8000";
+
 function App(){
+  const[username,setUsername]=useState("");
+  const[password,setPassword]=useState("");
+  const[currentUser,setCurrentUser]=useState("");
+  const[loginError,setLoginError]=useState("");
+  const[loginPopup,setLoginPopup]=useState("");
   const[messages,setMessages]=useState([
     {role:"assistant",content:"Hello !!"},
   ]);
   const[input,setInput]=useState("");
   const[sending,setSending]=useState(false);
   const[status,setStatus]=useState("");
+  const handleLogin=async()=>{
+    const cleanUsername=username.trim();
+    const cleanPassword=password.trim();
+
+    if(!cleanUsername||!cleanPassword){
+      setLoginError("Enter username and password");
+      return;
+    }
+
+    try{
+      setLoginError("");
+      const res=await fetch(`${API_BASE}/login`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          username:cleanUsername,
+          password:cleanPassword,
+        }),
+      });
+
+      const data=await res.json();
+
+      if(!res.ok){
+        throw new Error(data.detail||"Login failed");
+      }
+
+      setCurrentUser(data.username);
+      setPassword("");
+      setLoginPopup("Login successful");
+      setTimeout(()=>setLoginPopup(""),2000);
+    }catch(err){
+      setLoginError(err.message||"Login failed");
+    }
+  };
   const handleSend=async()=>{
     const text=input.trim();
-    if(!text||sending)return;
+    if(!text||sending||!currentUser)return;
     setInput("");
     setSending(true)
     setMessages((prev)=>[...prev,{role:"user",content:text}]);
 
     try{
-      const res=await fetch("http://127.0.0.1:8000/chat",{
+      const res=await fetch(`${API_BASE}/chat`,{
         method:"POST",
-        headers:{"Content-Type":"application/json"},
+        headers:{
+          "Content-Type":"application/json",
+          "X-User":currentUser,
+        },
         body: JSON.stringify({ message: text }),
       });
       if(!res.ok){
@@ -43,16 +87,32 @@ function App(){
       setSending(false);
     }      
   };
+  const handleLogout=()=>{
+    setCurrentUser("");
+    setUsername("");
+    setPassword("");
+    setLoginError("");
+    setLoginPopup("");
+    setInput("");
+    setStatus("");
+    setMessages([
+      {role:"assistant",content:"Hello !!"},
+    ]);
+  };
   const endRef=useRef(null);
   useEffect(()=>{endRef.current?.scrollIntoView({behavior:"smooth"});},[messages]);
 
   const uploadFile=async(file)=>{
+    if(!currentUser)return;
     try{
       setStatus("Uploading...");
       const formData=new FormData();
       formData.append("file",file);
-      const res=await fetch("http://127.0.0.1:8000/upload",{
+      const res=await fetch(`${API_BASE}/upload`,{
         method:"POST",
+        headers:{
+          "X-User":currentUser,
+        },
         body:formData,
       });
 
@@ -64,8 +124,8 @@ function App(){
       setStatus(`File uploaded:${data.filename}`);
       setTimeout(()=>setStatus(""),2000);
     }catch(err){
-      setStatus(`Upload error:${err.message}`);
-      setTimeout(()=>setStatus(""),2000);
+      setStatus("Upload failed or embedding failed after upload");
+      setTimeout(()=>setStatus(""),3000);
     }
   };
   const TypingDots = () => (
@@ -73,13 +133,50 @@ function App(){
       <span>.</span><span>.</span><span>.</span>
     </span>
   );
-  
+
+  if(!currentUser){
+    return(
+      <div className="page">
+        <div className="login-card">
+          <div className="chat-header">JobPrep Login</div>
+
+          <div className="login-form">
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e)=>setUsername(e.target.value)}
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e)=>setPassword(e.target.value)}
+              onKeyDown={(e)=>{
+                if(e.key==="Enter")handleLogin();
+              }}
+            />
+
+            <button onClick={handleLogin}>Login</button>
+
+            {loginError&&<div className="login-error">{loginError}</div>}
+          </div>
+
+          {loginPopup&&<div className="popup-box">{loginPopup}</div>}
+        </div>
+      </div>
+    );
+  }
 
   return(
     <div className="page">
       <div>
         <div className="chatbox">
-          <div className="chat-header">Job Application Helper</div>
+          <div className="chat-header chat-header-row">
+            <span>Job Application Helper</span>
+            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+          </div>
 
           <div className="chat-messages">
   {messages.map((m, i) => (
@@ -91,7 +188,6 @@ function App(){
     </div>
   ))}
 
-  {/* ✅ dots appear as NEXT assistant message */}
   {sending && (
     <div className="msg assistant">
       <span className="typing-dots" aria-label="Generating">
@@ -145,6 +241,7 @@ function App(){
         </div>
 
         {status&&<div className="below-status">{status}</div>}
+        {loginPopup&&<div className="popup-box">{loginPopup}</div>}
       </div>
     </div>
   );

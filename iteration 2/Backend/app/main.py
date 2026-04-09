@@ -46,6 +46,13 @@ def load_users()->list[dict]:
     data=json.loads(USERS_FILE.read_text(encoding="utf-8"))
     return data.get("users",[])
 
+def get_user_by_username(username:str)->dict|None:
+    users=load_users()
+    for user in users:
+        if user.get("username")==username:
+            return user
+    return None
+
 def authenticate_user(username:str,password:str)->dict|None:
     users=load_users()
     for user in users:
@@ -64,15 +71,26 @@ def login(payload:LoginRequest):
         "message":"Login successful"
     }
 
+@app.post("/logout")
+def logout():
+    return {"message":"Logout successful"}
+
 def get_current_user(request:Request)->str:
     user=(request.headers.get("X-User") or "").strip()
     if not user:
         raise HTTPException(status_code=401,detail="Missing X-User header")
-    return user
+    matched_user=get_user_by_username(user)
+    if not matched_user:
+        raise HTTPException(status_code=401,detail="Unknown user")
+    return matched_user["username"]
  
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://136.113.194.22:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -188,4 +206,3 @@ def retrieve(request:Request,
 @app.post("/embed")
 def embed():
     return embed_new_nodes()
-
