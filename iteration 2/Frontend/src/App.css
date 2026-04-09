@@ -1,0 +1,140 @@
+.page {
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: #f3f4f6;
+  font-family:Arial,sans-serif;
+}
+
+.chatbox {
+  width: 600px;
+  height:720px;
+  background: white;
+  border:1px solid #ddd;
+  border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.12);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.chat-header {
+  padding:14px 16px;
+  font-weight:bold;
+  border-bottom:1px solid #eee;
+}
+
+.chat-messages {
+  flex:1;
+  padding:16px;
+  overflow-y:auto;
+}
+
+.msg {
+  background: #f1f5f9;
+  padding:10px 12px;
+  border-radius:12px;
+  margin-bottom:10px;
+  width:fit-content;
+  max-width:80%;
+}
+
+.chat-input {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px;
+  border-top:1px solid #eee;
+}
+
+.upload-btn {
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background: #e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:22px;
+  font-weight:bold;
+  user-select:none;
+}
+
+.upload-btn:hover {
+  background: #d1d5db;
+}
+
+.chat-input input[type="text"] {
+  flex:1;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  outline:none;
+}
+
+.chat-input button {
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background: #111827;
+  color: white;
+}
+.below-status {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.below-status::before {
+  content: "";
+}
+
+.below-status {
+  background: #f3f4f6;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #111827;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* assistant bubble (match your existing assistant color) */
+.msg.assistant {
+  background: #eef2f7;   /* same light grey bubble */
+  color: #111827;        /* same text color */
+}
+
+/* user bubble if needed */
+.msg.user {
+  background: #eef2f7;   /* change if your user bubble is different */
+  color: #111827;
+}
+
+/* typing dots */
+.typing-dots {
+  display: inline-flex;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 18px;
+  color: inherit;        /* ✅ matches bubble text color */
+}
+
+.typing-dots span {
+  opacity: 0.25;
+  animation: dotPulse 1.2s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+  40% { opacity: 1; transform: translateY(-2px); }
+}
+.msg.assistant { margin-right: auto; }
+.msg.user { margin-left: auto; }
