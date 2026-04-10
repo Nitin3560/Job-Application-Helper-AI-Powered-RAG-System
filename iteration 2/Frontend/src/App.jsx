@@ -2,7 +2,7 @@ import{useState}from"react";
 import"./App.css";
 import{useEffect,useRef}from"react";
 
-const API_BASE="http://136.113.194.22:8000";
+const API_BASE="http://34.45.204.199:8000";
 
 function App(){
   const[username,setUsername]=useState("");
