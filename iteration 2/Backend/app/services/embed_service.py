@@ -183,14 +183,15 @@ def rag_chat(question: str, owner:str, job_description:str="", top_k: int = 3) -
     ]
 
     sources_block = "\n\n".join(
-        f"[{s['chunk_id']}] {trim_text(s['snippet'], 180)}" for s in sources
+        f"[{s['chunk_id']}] {trim_text(s['text'], 320)}" for s in sources
     )
     system = (
     "You are Job Application Helper.\n"
     "Use the uploaded user material as the main source of truth.\n"
     "Use the active job description to tailor the answer when relevant.\n"
     "Do not invent user-specific experience, projects, skills, achievements, or results that are not supported by the context.\n"
-    "If important user-specific details are missing, ask a short follow-up instead of assuming.\n"
+    "Answer from the available user material first, even if the answer is partial.\n"
+    "Only ask a short follow-up if the user asks for a detail that is truly not present.\n"
     "Be direct and practical. Prefer short bullet points when helpful.\n"
     )
 
@@ -202,7 +203,9 @@ def rag_chat(question: str, owner:str, job_description:str="", top_k: int = 3) -
     f"JOB DESCRIPTION:\n{active_job_description}\n\n"
     f"USER MATERIAL:\n{context or 'None'}\n\n"
     f"QUESTION:\n{question}\n\n"
-    "Answer directly. If details are missing, ask one short follow-up.\n\n"
+    "Answer directly using the user material and tailor it to the job description when relevant.\n"
+    "If the question is about fit, strengths, projects, resume bullets, interview answers, or experience, connect the answer to the available user material before asking for more details.\n"
+    "If details are missing, give the best grounded answer first, then ask one short follow-up only if needed.\n\n"
     "ANSWER:\n"
     )
 
