@@ -130,6 +130,7 @@ def retrieve_chunks(query:str, owner:str, top_k:int=3)->list[dict]:
             f"Index not found or empty at {INDEX_DIR}. Run embedding first."
         )
     storage_context=StorageContext.from_defaults(persist_dir=str(index_dir))
+    
     index=load_index_from_storage(storage_context)
     candidate_k=max(top_k*3,12)
     retriever=index.as_retriever(similarity_top_k=candidate_k)
@@ -154,7 +155,7 @@ def retrieve_chunks(query:str, owner:str, top_k:int=3)->list[dict]:
     return out
 
 def ollama_generate(model: str, prompt: str) -> str:
-    url="http://localhost:11434/api/generate"
+    url="http://localhost:11434/api/generate"  
     payload={"model": model, "prompt": prompt, "stream": False}
     r=httpx.post(url, json=payload, timeout=240)
     r.raise_for_status()
