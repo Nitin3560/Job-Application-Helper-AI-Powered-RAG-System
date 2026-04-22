@@ -2,7 +2,7 @@ import{useState}from"react";
 import"./App.css";
 import{useEffect,useRef}from"react";
 
-const API_BASE="http://34.45.204.199:8000";
+const API_BASE=`${window.location.protocol}//${window.location.hostname}:8000`;
 
 function App(){
   const[username,setUsername]=useState("");
